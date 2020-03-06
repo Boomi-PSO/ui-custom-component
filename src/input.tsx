@@ -1,31 +1,18 @@
 import * as React from 'react';
-import { IComponentProps, IManywho } from './interfaces';
-import { component } from './utils/wrapper';
+import { IComponentProps } from './interfaces';
+import { component, renderOutcomes } from './utils/wrapper';
 
-declare const manywho: IManywho;
+const input = ({ model, outcomes, flowKey, onChange, onEvent, getContentValue }: IComponentProps) => (
+    <>
+        <label>{model.label}</label>
+        <input
+            type="text"
+            value={getContentValue<string>()}
+            onChange={onChange}
+            onBlur={onEvent}
+        />
+        {renderOutcomes(outcomes, flowKey)}
+    </>
+);
 
-class CustomInput extends React.Component<IComponentProps> {
-
-    onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onChange(e.target.value);
-    }
-
-    onBlur = () => {
-        this.props.onEvent();
-    }
-
-    render() {
-        return (
-            <input
-                type="text"
-                value={this.props.getContentValue<string>()}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-            />
-        );
-    }
-}
-
-manywho.component.register('custom-input', component(CustomInput, true));
-
-export default CustomInput;
+export default component(input, true, 'custom-input');

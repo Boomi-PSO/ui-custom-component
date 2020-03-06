@@ -29,13 +29,12 @@ components will do some work fetching model, state, outcomes, etc for you which 
 
 ##### Component 
 
-When registering your custom component with the UI framework wrap it in the Component higher-order component
+Components can be registered automatically via the `component` HoC or by calling `manywho.component.register` manually:
 
 ```javascript
-manywho.component.register('custom-input', component(CustomInput));
-
-// Optionally set the debug mode to enabled, when running the flow in debug mode (`mode=DEBUG` in the query string)
+// Functionally equivalent, also set the debug mode to enabled, when running the flow in debug mode (`mode=DEBUG` in the query string)
 // links to to view the components model & state are rendered
+component(CustomInput, true, 'custom-input');
 manywho.component.register('custom-input', component(CustomInput, true));
 ```
 
@@ -47,6 +46,9 @@ The higher-order component will do a lot of heavy lifting for you such as
 * Setup debug rendering and debug logging
 * Provide helpers for propagating changes and events
 * Provide helpers for getting the current content value and objectdata
+
+The `onChange` handler provided in `props` will also accept html input change events, see `input.tsx` as an example. The `onEvent` handler will
+also accept blur events from html elements.
 
 **ObjectData**
 
@@ -72,10 +74,13 @@ objectData[0].PropertyName = 'New Value';
 
 ##### Container
 
-Container type components can also be wrapped in a higher-order component when be registered as well:
+Containers can be registered automatically via the `component` HoC or by calling `manywho.component.register` manually:
 
 ```javascript
-manywho.component.registerContainer('custom-container', container(CustomContainer));
+// Functionally equivalent, also set the debug mode to enabled, when running the flow in debug mode (`mode=DEBUG` in the query string)
+// links to to view the components model & state are rendered
+container(CustomContainer, 'custom-container');
+manywho.component.registerContainer('custom-container', container(CustomInput));
 ```
 
 ## Debugging
